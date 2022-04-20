@@ -77,17 +77,19 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
             userLogin: { userInfo },
         } = getState();
 
-        const config = {
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${userInfo.token}`,
-            },
-        };
+        // const config = {
+        //     headers: {
+        //         "Content-type": "application/json",
+        //         Authorization: `Bearer ${userInfo.token}`,
+        //     },
+        // };
 
-        const { data } = await axios.delete(
-            `/admin/product-destroy/${id}/`,
-            config
-        );
+        // const { data } = await axios.delete(
+        //     `/admin/product-destroy/${id}/`,
+        //     config
+        // );
+
+        const { data } = await Api.delete(`/admin/product-destroy/${id}/`);
 
         dispatch({
             type: PRODUCT_DELETE_SUCCESS,

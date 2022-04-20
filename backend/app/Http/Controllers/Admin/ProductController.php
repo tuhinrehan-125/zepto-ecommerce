@@ -102,7 +102,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        // $this->authorize('delete', $product);
+        $this->authorize('delete', $product);
 
         // delete the files associated to the record
         foreach(['thumbnail', 'large', 'original'] as $size){
