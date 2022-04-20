@@ -194,8 +194,8 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         dispatch({
             type: PRODUCT_UPDATE_FAIL,
             payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
+                error.response && error.response.data.detail
+                    ? error.response.data.detail
                     : error.message,
         });
     }
