@@ -10,7 +10,7 @@ import { listProductDetails, updateProduct } from "../actions/productActions";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 
 function ProductEditScreen() {
-    const { productId } = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [name, setName] = useState("");
@@ -35,8 +35,8 @@ function ProductEditScreen() {
     } = productUpdate;
 
     useEffect(() => {
-        if (!product.name || product.id != Number(productId)) {
-            dispatch(listProductDetails(productId));
+        if (!product.name || product.id != Number(id)) {
+            dispatch(listProductDetails(id));
         } else {
             setName(product.name);
             setPrice(product.price);
@@ -46,7 +46,7 @@ function ProductEditScreen() {
             setCountInStock(product.countInStock);
             setDescription(product.description);
         }
-    }, [dispatch, product, productId, navigate]);
+    }, [dispatch, product, id, navigate]);
 
     const submitHandler = (e) => {
         e.preventDefault();

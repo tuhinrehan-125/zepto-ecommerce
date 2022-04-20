@@ -21,6 +21,8 @@ import {
     PRODUCT_UPDATE_FAIL,
 } from "../constants/productConstants";
 
+import Api from "../axios";
+
 export const listProducts =
     (keyword = "") =>
     async (dispatch) => {
@@ -31,7 +33,7 @@ export const listProducts =
 
             dispatch({
                 type: PRODUCT_LIST_SUCCESS,
-                payload: data,
+                payload: data.data,
             });
         } catch (error) {
             dispatch({
@@ -111,18 +113,14 @@ export const createProduct = (formData) => async (dispatch, getState) => {
             userLogin: { userInfo },
         } = getState();
 
-        const config = {
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${userInfo.meta.token}`,
-            },
-        };
+        // const config = {
+        //     headers: {
+        //         "Content-type": "application/json",
+        //         Authorization: `Bearer ${userInfo.meta.token}`,
+        //     },
+        // };
 
-        const { data } = await axios.post(
-            `/admin/product-store/`,
-            formData,
-            config
-        );
+        const { data } = await Api.post(`/admin/product-store/`, formData);
         dispatch({
             type: PRODUCT_CREATE_SUCCESS,
             payload: data,

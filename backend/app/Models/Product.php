@@ -23,4 +23,10 @@ class Product extends Model
         'disk',
         'created_by',
     ];
+
+    public function getImageAttribute()
+    {
+        return asset($this->attributes['image']);
+        
+    }
 }

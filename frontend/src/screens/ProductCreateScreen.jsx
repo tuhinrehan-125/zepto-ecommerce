@@ -58,18 +58,21 @@ function ProductCreateScreen() {
     const submitHandler = async (e) => {
         e.preventDefault();
         // const file = e.target.files[0];
-        const formData = new FormData();
+        let formId = document.getElementById("productForm");
+        const formData = new FormData(formId);
         // formData.append("image", file);
-        formData.append("name", name);
-        formData.append("price", price);
-        // formData.append("image", image);
-        formData.append("brand", brand);
-        formData.append("category", category);
-        formData.append("countInStock", countInStock);
-        formData.append("description", description);
+        // formData.append("name", name);
+        // formData.append("price", price);
+        // // formData.append("image", image);
+        // formData.append("brand", brand);
+        // formData.append("category", category);
+        // formData.append("countInStock", countInStock);
+        // formData.append("description", description);
 
-        console.log("You hit the create button!");
+        // console.log("You hit the create button!");
         dispatch(createProduct(formData));
+
+        console.log(formData);
     };
 
     const uploadFileHandler = async (e) => {
@@ -113,13 +116,18 @@ function ProductCreateScreen() {
                 ) : error ? (
                     <Message variant="danger">{error}</Message>
                 ) : (
-                    <Form onSubmit={submitHandler}>
+                    <Form
+                        onSubmit={submitHandler}
+                        id="productForm"
+                        enctype="multipart/form-data"
+                    >
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
                                 type="name"
                                 placeholder="Enter name"
                                 value={name}
+                                name="name"
                                 onChange={(e) => setName(e.target.value)}
                             ></Form.Control>
                         </Form.Group>
@@ -130,6 +138,7 @@ function ProductCreateScreen() {
                                 type="number"
                                 placeholder="Enter price"
                                 value={price}
+                                name="price"
                                 onChange={(e) => setPrice(e.target.value)}
                             ></Form.Control>
                         </Form.Group>
@@ -139,8 +148,9 @@ function ProductCreateScreen() {
                             <Form.Control
                                 type="file"
                                 placeholder="Enter image"
-                                value={image}
-                                onChange={(e) => setImage(e.target.files)}
+                                name="image"
+                                // value={image}
+                                // onChange={(e) => setImage(e.target.files)}
                             ></Form.Control>
 
                             {/* <Form.File
@@ -157,6 +167,7 @@ function ProductCreateScreen() {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter brand"
+                                name="brand"
                                 value={brand}
                                 onChange={(e) => setBrand(e.target.value)}
                             ></Form.Control>
@@ -168,6 +179,7 @@ function ProductCreateScreen() {
                                 type="number"
                                 placeholder="Enter stock"
                                 value={countInStock}
+                                name="countInStock"
                                 onChange={(e) =>
                                     setCountInStock(e.target.value)
                                 }
@@ -179,6 +191,7 @@ function ProductCreateScreen() {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter category"
+                                name="category"
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value)}
                             ></Form.Control>
@@ -189,6 +202,7 @@ function ProductCreateScreen() {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter description"
+                                name="description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             ></Form.Control>

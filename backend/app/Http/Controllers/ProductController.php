@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,12 +14,13 @@ class ProductController extends Controller
         if( $request->has("keyword")){
             $terms = $request->input('keyword');
             $products = Product::where('name', 'like', '%' . $terms . '%')->get();
-            return $products;
+            // return $products;
+            return ProductCollection::collection($products);
+
         }
         else {
             $products = Product::all();
-            return $products;
-            // return response()->json($products, 200);
+            return ProductCollection::collection($products);
         }
     }
 

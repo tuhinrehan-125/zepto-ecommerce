@@ -14,31 +14,22 @@ class ProductController extends Controller
 {
     public function store(Request $request)
     {
-        // $this->authorize('create', Product::class);
+        $this->authorize('create', Product::class);
         
         // validate the request
         $this->validate($request, [
             'name' => 'required',
-            // 'image' => 'required', 'mimes:jpeg,gif,bmp,png', 'max:2048',
+            'image' => 'required', 'mimes:jpeg,gif,bmp,png', 'max:2048',
             'price' => 'required'
         ]);
 
-        // if($request->has("image")){
-        //     // get the image
-        //     $image = $request->file('image');
-        //     $image_path = $image->getPathName();
-
-        //     // get the original file name and replace any spaces with _
-        //     // Business phone.png = /images/business_phone.png
-        //     $filename = "/images"."/". preg_replace('/\s+/', '_', strtolower($image->getClientOriginalName()));
-            
-        //     // move the image to the temporary location (tmp)
-        //     $tmp = $image->storeAs('uploads/original', $filename, 'tmp');
-        // }
+        if($request->has("image")){
+            $filename = $request->file('image')->store('upload');
+        }
         // create the database record for the product
         $product = Product::create([
             'name' => $request->name,
-            'image' => "/images/text.jpg",
+            'image' => $filename,
             'description' => $request->description,
             'brand' => $request->brand,
             'category' => $request->category,
@@ -46,7 +37,7 @@ class ProductController extends Controller
             'countInStock' => $request->countInStock,
             'rating' => $request->rating,
             'numReviews' => $request->numReviews,
-            'disk' => config('site.upload_disk'),
+            // 'disk' => config('site.upload_disk'),
             'created_by' => auth()->id(),
         ]);
 
