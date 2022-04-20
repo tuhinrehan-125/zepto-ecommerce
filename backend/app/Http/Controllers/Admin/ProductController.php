@@ -67,16 +67,9 @@ class ProductController extends Controller
             'price' => 'required'
         ]);
 
-        // get the image
-        $image = $request->file('image');
-        $image_path = $image->getPathName();
-
-        // get the original file name and replace any spaces with _
-        // Business phone.png = /images/business_phone.png
-        $filename = "/images"."/". preg_replace('/\s+/', '_', strtolower($image->getClientOriginalName()));
-        
-        // move the image to the temporary location (tmp)
-        $tmp = $image->storeAs('uploads/original', $filename, 'tmp');
+        if($request->has("image")){
+            $filename = $request->file('image')->store('upload');
+        }
 
         $design = $product->update([
             'name' => $request->name,
@@ -91,7 +84,7 @@ class ProductController extends Controller
         ]);
 
         // dispatch a job to handle the image manipulation
-        $this->dispatch(new UploadImage($product));
+        // $this->dispatch(new UploadImage($product));
 
         return response()->json([
             "Message" => "Product has been updated!"

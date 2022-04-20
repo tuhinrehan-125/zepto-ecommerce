@@ -57,7 +57,6 @@ function ProductCreateScreen() {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        // const file = e.target.files[0];
         let formId = document.getElementById("productForm");
         const formData = new FormData(formId);
         // formData.append("image", file);
@@ -72,32 +71,7 @@ function ProductCreateScreen() {
         // console.log("You hit the create button!");
         dispatch(createProduct(formData));
 
-        console.log(formData);
-    };
-
-    const uploadFileHandler = async (e) => {
-        // const file = e.target.files[0];
-        // const formData = new FormData();
-        // formData.append("image", file);
-        // formData.append("product_id", productId);
-        // setUploading(true);
         // console.log(formData);
-        // try {
-        //     const config = {
-        //         headers: {
-        //             "Content-Type": "multipart/form-data",
-        //         },
-        //     };
-        //     const { data } = await axios.post(
-        //         "/api/products/upload/",
-        //         formData,
-        //         config
-        //     );
-        //     setImage(data);
-        //     setUploading(false);
-        // } catch (error) {
-        //     setUploading(false);
-        // }
     };
 
     return (
@@ -152,14 +126,6 @@ function ProductCreateScreen() {
                                 // value={image}
                                 // onChange={(e) => setImage(e.target.files)}
                             ></Form.Control>
-
-                            {/* <Form.File
-                                id="image-file"
-                                label="Choose File"
-                                custom
-                                onChange={uploadFileHandler}
-                            ></Form.File>
-                            {uploading && <Loader />} */}
                         </Form.Group>
 
                         <Form.Group controlId="brand">

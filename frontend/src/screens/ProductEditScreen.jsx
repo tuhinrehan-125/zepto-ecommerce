@@ -50,18 +50,10 @@ function ProductEditScreen() {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        // dispatch(
-        //     updateProduct({
-        //         id: productId,
-        //         name,
-        //         price,
-        //         // image,
-        //         brand,
-        //         category,
-        //         countInStock,
-        //         description,
-        //     })
-        // );
+        let formId = document.getElementById("productForm");
+        const formData = new FormData(formId);
+
+        dispatch(updateProduct(formData, id));
     };
 
     return (
@@ -80,12 +72,17 @@ function ProductEditScreen() {
                 ) : error ? (
                     <Message variant="danger">{error}</Message>
                 ) : (
-                    <Form onSubmit={submitHandler}>
+                    <Form
+                        onSubmit={submitHandler}
+                        id="productForm"
+                        enctype="multipart/form-data"
+                    >
                         <Form.Group controlId="name">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
                                 type="name"
                                 placeholder="Enter name"
+                                name="name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             ></Form.Control>
@@ -96,26 +93,29 @@ function ProductEditScreen() {
                             <Form.Control
                                 type="number"
                                 placeholder="Enter price"
+                                name="price"
                                 value={price}
                                 onChange={(e) => setPrice(e.target.value)}
                             ></Form.Control>
                         </Form.Group>
 
-                        {/* <Form.Group controlId="image">
+                        <Form.Group controlId="image">
                             <Form.Label>Image</Form.Label>
                             <Form.Control
-                                type="text"
+                                type="file"
                                 placeholder="Enter image"
-                                value={image}
-                                onChange={(e) => setImage(e.target.value)}
+                                name="image"
+                                // value={image}
+                                // onChange={(e) => setImage(e.target.value)}
                             ></Form.Control>
-                        </Form.Group> */}
+                        </Form.Group>
 
                         <Form.Group controlId="brand">
                             <Form.Label>Brand</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Enter brand"
+                                name="brand"
                                 value={brand}
                                 onChange={(e) => setBrand(e.target.value)}
                             ></Form.Control>
@@ -126,6 +126,7 @@ function ProductEditScreen() {
                             <Form.Control
                                 type="number"
                                 placeholder="Enter stock"
+                                name="countInStock"
                                 value={countInStock}
                                 onChange={(e) =>
                                     setCountInStock(e.target.value)
@@ -138,6 +139,7 @@ function ProductEditScreen() {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter category"
+                                name="category"
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value)}
                             ></Form.Control>
@@ -148,6 +150,7 @@ function ProductEditScreen() {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter description"
+                                name="description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             ></Form.Control>

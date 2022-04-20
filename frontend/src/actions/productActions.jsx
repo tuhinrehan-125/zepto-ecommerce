@@ -77,13 +77,6 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
             userLogin: { userInfo },
         } = getState();
 
-        // const config = {
-        //     headers: {
-        //         "Content-type": "application/json",
-        //         Authorization: `Bearer ${userInfo.token}`,
-        //     },
-        // };
-
         // const { data } = await axios.delete(
         //     `/admin/product-destroy/${id}/`,
         //     config
@@ -123,6 +116,7 @@ export const createProduct = (formData) => async (dispatch, getState) => {
         // };
 
         const { data } = await Api.post(`/admin/product-store/`, formData);
+
         dispatch({
             type: PRODUCT_CREATE_SUCCESS,
             payload: data,
@@ -159,7 +153,7 @@ export const specificProductDetails = (id) => async (dispatch) => {
     }
 };
 
-export const updateProduct = (product) => async (dispatch, getState) => {
+export const updateProduct = (product, id) => async (dispatch, getState) => {
     try {
         dispatch({
             type: PRODUCT_UPDATE_REQUEST,
@@ -169,18 +163,16 @@ export const updateProduct = (product) => async (dispatch, getState) => {
             userLogin: { userInfo },
         } = getState();
 
-        const config = {
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${userInfo.meta.token}`,
-            },
-        };
-
-        const { data } = await axios.put(
-            `/admin/product-update/${product.id}/`,
-            product,
-            config
+        // const { data } = await axios.put(
+        //     `/admin/product-update/${product.id}/`,
+        //     product,
+        //     config
+        // );
+        const { data } = await Api.post(
+            `/admin/product-update/${id}/`,
+            product
         );
+
         dispatch({
             type: PRODUCT_UPDATE_SUCCESS,
             payload: data,
